@@ -42,6 +42,7 @@ float Kp, Kd, Kbemf, Ku, Ki, directV, desiredAngle;
 
 //Rest of Setup:
 bool first_time;
+//String config_message  = "&A~Desired~5&C&S~K_P~P~0~20~0.05&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.05&T~ArmAngle~F4~-2.5~2.5&T~Error~F4~-5~5&T~Delta~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
 String config_message  = "&A~Desired~5&C&S~K_P~P~0~20~0.05&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.05&T~Phi~F4~-2.5~2.5&T~AngleError~F4~-5~5&T~AngularVelocityError~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
 
 float rad2deg = 1.0/deg2rad;        // 180/pi
@@ -107,11 +108,11 @@ void setup() {
   delay(500); //wait 500ms
   byte c = imu.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
   Serial.print("MPU9250 "); Serial.print("I AM "); Serial.print(c, HEX);
-  Serial.println("HIHI");
-  Serial.println("HEY");
+  //Serial.println("HIHI");
+  //Serial.println("HEY");
   c = imu.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
-  Serial.print("MPU9250 "); Serial.print("I AM "); Serial.print(c, HEX);
-  Serial.print(" I should be "); Serial.println(0x73, HEX);
+  //Serial.print("MPU9250 "); Serial.print("I AM "); Serial.print(c, HEX);
+  //Serial.print(" I should be "); Serial.println(0x73, HEX);
   if (c == 0x73) // WHO_AM_I   //IF YOU HAVE A BLUE IMU CHANGE TO 0x73
   {
     //Serial.println("MPU9250 is online...");
@@ -124,8 +125,8 @@ void setup() {
     } // if (c == 0x73)
   else
   {
-    Serial.print("Could not connect to MPU9250: 0x");
-    Serial.println(c, HEX);
+    //Serial.print("Could not connect to MPU9250: 0x");
+    //Serial.println(c, HEX);
     while(1) ; // Loop forever if communication doesn't happen
   }
   pinMode(5,INPUT_PULLUP);
