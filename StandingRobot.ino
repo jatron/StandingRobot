@@ -42,7 +42,7 @@ float Kp, Kd, Kbemf, Ku, Ki, directV, desiredAngle;
 
 //Rest of Setup:
 bool first_time;
-String config_message  = "&A~Desired~5&C&S~K_P~P~0~20~0.05&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.01&T~Phi~F4~-2.5~2.5&T~AngleError~F4~-5~5&T~AngularVelocityError~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
+String config_message  = "&A~Desired~5&C&S~K_P~P~0~100~0.1&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.01&T~Phi~F4~-2.5~2.5&T~AngleError~F4~-5~5&T~AngularVelocityError~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
 
 float rad2deg = 1.0/deg2rad;        // 180/pi
  
