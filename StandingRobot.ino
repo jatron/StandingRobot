@@ -38,12 +38,11 @@ float Kp, Kd, Kbemf, Ku, Ki, directV, desiredAngle;
 #define twopi 6.2831853  
 
 // Variables for standing robot
-#define ANGULAR_VELOCITIES_COUNT 3
+#define ANGULAR_VELOCITIES_COUNT 10
 
 //Rest of Setup:
 bool first_time;
-//String config_message  = "&A~Desired~5&C&S~K_P~P~0~20~0.05&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.05&T~ArmAngle~F4~-2.5~2.5&T~Error~F4~-5~5&T~Delta~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
-String config_message  = "&A~Desired~5&C&S~K_P~P~0~20~0.05&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.05&T~Phi~F4~-2.5~2.5&T~AngleError~F4~-5~5&T~AngularVelocityError~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
+String config_message  = "&A~Desired~5&C&S~K_P~P~0~20~0.05&S~K_D~D~0~10~0.05&S~K_I~I~0~100~0.01&S~SumMax~S~0~50~1&S~Direct~O~0~5~0.01&S~Desired~A~-2.5~2.5~0.01&T~Phi~F4~-2.5~2.5&T~AngleError~F4~-5~5&T~AngularVelocityError~F4~-5~5&T~Sum~F4~-50~50&T~MotorCmd~F4~0~5&H~4&";
 
 float rad2deg = 1.0/deg2rad;        // 180/pi
  
@@ -73,7 +72,7 @@ char gyroo[100];
 char magoo[100];
 float phi = 0;
 char phiString[20];
-float angularVelocities[ANGULAR_VELOCITIES_COUNT];
+float angularVelocities[ANGULAR_VELOCITIES_COUNT]; // in rad/s
 
 // Initializes past values.
 void setup() {
@@ -168,7 +167,7 @@ void loop() {  // Main code, runs repeatedly
   for (uint8_t i=(ANGULAR_VELOCITIES_COUNT-1); i>0; i--) {
     angularVelocities[i] = angularVelocities[i-1];
   }
-  angularVelocities[0] = gy;
+  angularVelocities[0] = gy * deg2rad;
 
   // Get average angular velocity
   float angularVelocitySum = 0;
