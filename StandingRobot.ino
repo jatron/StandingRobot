@@ -74,7 +74,7 @@ float phi = 0;
 char phiString[20];
 float angularVelocities[ANGULAR_VELOCITIES_COUNT]; // in rad/s
 float alpha;
-float ax;
+float ay;
 float az;
 
 // Initializes past values.
@@ -156,18 +156,18 @@ void loop() {  // Main code, runs repeatedly
   /*************** IMU Data **********************/
   // acceleration in Gs
   imu.readAccelData(imu.accelCount);
-  ax = (-imu.accelCount[0]*imu.aRes)*alpha + ax*(1-alpha);
+  ay = (-imu.accelCount[1]*imu.aRes)*alpha + ay*(1-alpha);
   az = (-imu.accelCount[2]*imu.aRes)*alpha + az*(1-alpha);
   // gyro readings in degrees per second
   imu.readGyroData(imu.gyroCount);
-  float gy = imu.gyroCount[1]*imu.gRes;
-  phi = atan2(az, ax);
+  float gx = imu.gyroCount[0]*imu.gRes;
+  phi = atan2(az, ay);
 
   // Update angular velocities
   for (uint8_t i=(ANGULAR_VELOCITIES_COUNT-1); i>0; i--) {
     angularVelocities[i] = angularVelocities[i-1];
   }
-  angularVelocities[0] = gy * deg2rad;
+  angularVelocities[0] = gx * deg2rad;
 
   // Get average angular velocity
   float angularVelocitySum = 0;
@@ -184,7 +184,7 @@ void loop() {  // Main code, runs repeatedly
 
   // Compute error, and error deltas from past.
   float angleError = (desiredAngle - phi);
-  float angularVelocityError = -averageAngularVelocity;
+  float angularVelocityError = averageAngularVelocity;
   angleErrorIntegral = min(max(angleErrorIntegral + angleError*dTsec,-1*integralMax),integralMax);
 
   // Compute and write out motor command.
