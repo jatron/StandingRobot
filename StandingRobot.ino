@@ -7,6 +7,7 @@
 //Likely User Modified Variables ******************************
 
 unsigned int deltaT = 1000;         // Sample period in microseconds.
+const float deltaT_s = deltaT * 0.001 * 0.001;
 int angleAverages = 3;
 int past_size = 3;
 // interval for delta, larger=less noise, more delay.
@@ -156,12 +157,11 @@ void loop() {  // Main code, runs repeatedly
   /*************** IMU Data **********************/
   // acceleration in Gs
   imu.readAccelData(imu.accelCount);
-  ay = (-imu.accelCount[1]*imu.aRes)*alpha + ay*(1-alpha);
-  az = (-imu.accelCount[2]*imu.aRes)*alpha + az*(1-alpha);
+  ay = (-imu.accelCount[1]*imu.aRes);
+  az = (-imu.accelCount[2]*imu.aRes);
   // gyro readings in degrees per second
   imu.readGyroData(imu.gyroCount);
   float gx = imu.gyroCount[0]*imu.gRes;
-  phi = atan2(az, ay);
 
   // Update angular velocities
   for (uint8_t i=(ANGULAR_VELOCITIES_COUNT-1); i>0; i--) {
@@ -175,6 +175,8 @@ void loop() {  // Main code, runs repeatedly
     angularVelocitySum += angularVelocities[i];
   }
   float averageAngularVelocity = angularVelocitySum/ANGULAR_VELOCITIES_COUNT;
+
+  phi = (phi - averageAngularVelocity*deltaT_s)*alpha + atan2(az, ay)*(1-alpha);
  
   /*************** Section of Likely User modifications.**********************/
   // Read Angle, average to reduce noise.
